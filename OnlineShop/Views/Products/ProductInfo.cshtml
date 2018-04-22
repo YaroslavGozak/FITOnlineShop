@@ -1,0 +1,108 @@
+﻿@model OnlineShop.Models.Product
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h2>@Model.Name</h2>
+
+<div>
+    <hr />
+    <img src="@Model.ImageUrl" style="max-height:30%; max-width:50%" />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<input type="hidden" id="item_name" value="@Model.Name" />
+<input type="hidden" id="item_id" value="@Model.ID" />
+<input type="hidden" id="item_price" value="@Model.Price" />
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#description">Description</a></li>
+    <li><a data-toggle="tab" href="#feedbacks">Feedbacks</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="description" class="tab-pane fade in active">
+        <h3>Description</h3>
+        <p>@Model.Description</p>
+    </div>
+    <div id="feedbacks" class="tab-pane fade">
+        <h3>Leave a feedback</h3>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="feedback_text">Feedback</label>
+                <input type="text" class="form-control" id="feedback_text" placeholder="This product is awesome"/>
+            </div>
+            <div class="form-group">
+                <label for="feedback_author_name">Your Name</label>
+                <input type="text" class="form-control" id="feedback_author_name" placeholder="Ivan Ivanovich"/>
+            </div>
+            <div class="form-group">
+                <label for="feedback_author_email">Your Email</label>
+                <input type="text" class="form-control" id="feedback_author_email" placeholder="test@example.com"/>
+            </div>
+            <input type="button" class="btn btn-primary" value="Leave feedback"/>
+    </form>
+</div>
+</div>
+<p>
+    <a href="#" id="add_to_cart_link" model="@Model">Add to Cart</a> |
+    <a href="@Url.Action("Products", "Products", new { category = Model.Category })">Back to List</a>
+</p>
+
+<script>
+    require(['jquery'], function ($) {
+
+        var actions = {
+            addToCart: function () {
+                let item = {};
+                item.Name = $("#item_name").val();
+                item.ID = $("#item_id").val();
+                item.Price = $("#item_price").val();
+                $.ajax({
+                    method: "post",
+                    url: "/Shopping/AddItemToCart",
+                    data: item,
+                    success: function (response) {
+                        console.log(response);
+                        if (response.succcess) {
+                            console.log("Success");
+                        }
+                        else {
+                            console.log("No success");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+
+        $("#add_to_cart_link").on("click", actions.addToCart);
+    });
+</script>

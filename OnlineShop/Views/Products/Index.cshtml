@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model OnlineShop.ViewModels.ProductViewModel
+
+<div class="height-50"></div>
+@if (Model?.Products != null)
+{
+    foreach (var product in Model.Products)
+    {
+        <div class="col-md-4 col-sm-6">
+            <div class="card">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
+                <div class="card-body">
+                    <h4 class="card-title">@product.Name</h4>
+                    <p class="card-text">@product.Description</p>
+                    <a href='@Url.Action("ProductInfo","Products",new { id = product.ID })' class="btn btn-primary">See Product</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+<div class="height-50"></div>

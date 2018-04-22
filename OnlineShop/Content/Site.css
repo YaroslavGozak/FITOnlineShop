@@ -1,0 +1,104 @@
+﻿body {
+    /*background-color:#f5e062;*/
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+a{
+    cursor:pointer;
+}
+a:hover{
+    text-decoration:none !important;
+}
+
+/*.jumbotron, .list-group, .list-group.list-group-item {
+    background-color: #f3e99a !important;
+}*/
+
+footer .col-sm-4 {
+    background-color: #232222;
+}
+
+footer, .footer{
+    background-color:#232222;
+    display:block;
+    bottom:0px;
+    position:page;
+}
+
+footer h3.footer-column-heading{
+    color: yellow;
+}
+
+footer a {
+    color: gray;
+    background-color: #232222;
+}
+
+li{
+    list-style-type:none;
+}
+
+footer footer-info-list li a{
+    color:gray !important;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+footer{
+    /*background-color:#1a1818;*/
+}
+
+.card{
+    display:block;
+    border-radius:6px;
+    box-shadow:3px 3px 5px grey;
+    margin: 10px;
+    border: 1px solid gray;
+}
+
+.card:hover {
+    box-shadow: 10px 10px 10px grey;
+}
+
+.card-img-top {
+    width: 200px;
+    height: 200px;
+    background-position: 50% 50%;
+    margin:5px;
+}
+
+.card-body {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    text-align:center;
+    padding: 5px;
+}
+
+.card-title{
+    text-align: center;
+}
+
+div.height-50{
+    min-height:50px;
+    height:50px;
+}
