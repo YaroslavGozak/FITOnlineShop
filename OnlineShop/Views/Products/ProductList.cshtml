@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model OnlineShop.ViewModels.ProductViewModel
+
+<div class="height-50"></div>
+@if (Model?.Products != null)
+{
+    foreach (var product in Model.Products)
+    {
+        if (product.Description.Length > 50)
+        {
+            product.Description = product.Description.Substring(0, 47) + "...";
+        }
+        <div class="col-md-4 col-sm-6">
+            <div class="card">
+                <a href='@Url.Action("ProductInfo","Products",new { id = product.ID })'>
+                    <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">@product.Name</h4>
+                    <p class="card-text">@product.Description</p>
+                    
+                </div>
+                <div class="card-footer">
+                    <span><strong>Price: </strong> @product.Price.ToString("C")</span>
+                    <a class="btn btn-primary add-to-cart" product-id="@product.ID">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@for(var i = 0; i < 5; i++)
+{
+    <div class="height-50"></div>
+}
+
+<script>
+    requirejs(['jquery', 'toastr'], function ($, toastr) {
+        var actions = {
+            addToCart: function (target) {
+                let item = {};
+                item.ID = $(target).attr("product-id");
+                $.ajax({
+                    method: "post",
+                    url: "/Shopping/AddItemToCart",
+                    data: item,
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            console.log("Success");
+                            toastr.success("Item added to cart");
+                        }
+                        else {
+                            console.log("No success");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+        $(".add-to-cart").on("click", function () {
+            actions.addToCart(this);
+        });
+    });
+</script>

@@ -1,0 +1,87 @@
+﻿@model OnlineShop.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "ShoppingCart";
+}
+
+<div>
+    <div class="cover">
+        <h2>ShoppingCart</h2>
+
+        @if (Model != null && Model.Items != null && Model.Items.Any())
+        {
+            double total = 0;
+            <div class="panel-group">
+                @foreach (var item in Model.Items)
+                {
+                    var price = (item.Count * item.Product.Price);
+                    total += price;
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">@item.Product.Name<span class="badge" style="margin-left:5px">@item.Count</span>
+                            <button type="button" class="close pull-right" aria-label="Close" item-id="@item.Product.ID">
+                                <span aria-hidden="true">&times;</span>
+                            </button></div>
+                        <div class="panel-body">
+                            <div class="col-sm-4">
+                                <img style="height:100px;width:100px;" src="@item.Product.ImageUrl" class="cart-image" />
+                            </div>
+                            <div class="col-sm-6">
+                                @item.Product.Description
+                            </div>
+                            <div class="col-sm-2">
+                                <span class="price">Price: @(price.ToString("C"))</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="pull-right total-price">Total: @(total.ToString("C"))</div>
+            </div>
+            <div class="row">
+                <a class="btn btn-info pull-left" href="@Url.Action("Index","Home")">Continue Shopping</a>
+                <a class="btn btn-info pull-right" href="@Url.Action("Checkout","Shopping")">Checkout</a>
+            </div>
+        }
+        else
+        {
+            <div class="jumbotron text-center">
+                <h2>Looks loke you have no items in cart</h2>
+                <div class="text-center">
+                    <a class="btn btn-lg btn-info" href="@Url.Action("Products", "Products")">Go to Shopping</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    requirejs(['jquery'], function ($) {
+        removeItemUrl = '@Url.Action("removeFromCart", "Shopping")';
+        var actions = {
+            removeItem: function (e) {
+                let itemID = $(this).attr("item-id");
+                actions.removeItemAjax(itemID);
+            },
+            removeItemAjax: function (itemID) {
+                $.ajax({
+                    url: removeItemUrl,
+                    data: 6,
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            console.log("Success");
+                            window.location = window.location;
+                        }
+                        else {
+                            console.log("No success");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+        $("[aria-label]").on("click", actions.removeItem);
+    })
+</script>

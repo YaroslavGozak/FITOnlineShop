@@ -4,10 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/Site.css")
-    @*@Scripts.Render("~/bundles/modernizr")*@
+    
+    @Styles.Render("~/Content/toastr.css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/toastr.js")
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    @Styles.Render("~/Content/Site.css")
+    @RenderSection("scripts", required: false)
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js" data-main="@Url.Content("~/Scripts/bootstrap.js")"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '/Scripts',
+            paths: {
+                jquery: 'jquery-3.3.7',
+                toastr: 'toastr',
+                bootstrap: 'bootstrap'
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -23,26 +39,35 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Products
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href='@Url.Action("Products", "Products", new { category = "wear" })'>Wear</a></li>
-                            <li><a href="@Url.Action("Products", "Products", new { category = "boots" })">Boots</a></li>
-                            <li><a href="@Url.Action("Products", "Products", new { category = "food" })">Food</a></li>
-                        </ul>
-                    </li>
+                    <li>@Html.ActionLink("Products", "Products", "Products")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href='@Url.Action("ShoppingCart", "Shopping")'>
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Cart
+                            @if (OnlineShop.Services.State.Shopping != null && OnlineShop.Services.State.Shopping.Any())
+                            {
+                                <span>(@(OnlineShop.Services.State.Shopping.Count))</span>
+                            }
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container body-content" style="min-height:90%">
-        @RenderBody()
-        <hr />
+
+    <div class="container body-content">
+        <div>
+            @RenderBody()
+        </div>
+        <div class="row">
+            <div class="height-50"></div>
+            <hr />
+            <div class="height-50"></div>
+        </div>
+        
     </div>
     <div class="container-fluid footer">
         <div class="col-sm-4">
@@ -73,9 +98,6 @@
             </ul>
         </div>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
 </body>
 </html>

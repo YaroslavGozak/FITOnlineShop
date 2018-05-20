@@ -8,7 +8,7 @@
 
 <div>
     <hr />
-    <img src="@Model.ImageUrl" style="max-height:30%; max-width:50%" />
+    <img src="@Model.ImageUrl" style="max-height:400px; max-width:50%" />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -52,10 +52,10 @@
     </div>
     <div id="feedbacks" class="tab-pane fade">
         <h3>Leave a feedback</h3>
-        <form class="form-horizontal">
+        <form class="form" id="feedback_form">
             <div class="form-group">
-                <label for="feedback_text">Feedback</label>
-                <input type="text" class="form-control" id="feedback_text" placeholder="This product is awesome"/>
+                <label for="comment">Comment:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
             </div>
             <div class="form-group">
                 <label for="feedback_author_name">Your Name</label>
@@ -65,9 +65,11 @@
                 <label for="feedback_author_email">Your Email</label>
                 <input type="text" class="form-control" id="feedback_author_email" placeholder="test@example.com"/>
             </div>
-            <input type="button" class="btn btn-primary" value="Leave feedback"/>
-    </form>
-</div>
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" value="Leave a feedback" id="leave_feedback"/>
+            </div>
+        </form>
+    </div>
 </div>
 <p>
     <a href="#" id="add_to_cart_link" model="@Model">Add to Cart</a> |
@@ -75,8 +77,7 @@
 </p>
 
 <script>
-    require(['jquery'], function ($) {
-
+    requirejs(['jquery', 'toastr'], function ($, toastr) {
         var actions = {
             addToCart: function () {
                 let item = {};
@@ -89,8 +90,9 @@
                     data: item,
                     success: function (response) {
                         console.log(response);
-                        if (response.succcess) {
+                        if (response.success) {
                             console.log("Success");
+                            toastr.success("Item added to cart");
                         }
                         else {
                             console.log("No success");
@@ -100,9 +102,14 @@
                         console.log(error);
                     }
                 });
+            },
+            sendFeedback: function () {
+                toastr.info("Your feedback sent","Thank you!");
+                $("#feedback_form")[0].reset();
             }
         }
 
+        $("#leave_feedback").on("click", actions.sendFeedback);
         $("#add_to_cart_link").on("click", actions.addToCart);
     });
 </script>

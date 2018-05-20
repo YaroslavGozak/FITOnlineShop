@@ -1,0 +1,125 @@
+﻿@model OnlineShop.ViewModels.ReviewViewModel
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Checkout</h2>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Billing Info</div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.Info.CreditCard.Number)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.CreditCard.Number)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Info.CreditCard.Expiration)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.CreditCard.Expiration)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Shipping Info</div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.Info.Address.Country)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.Address.Country)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Info.Address.City)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.Address.City)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Info.Address.State)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.Address.State)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Info.Address.Address1)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.Address.Address1)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Customer Info</div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.Info.FirstName)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.FirstName)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Info.LastName)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.LastName)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Info.Phone)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.Phone)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Info.Email)</dt>
+                    <dd>@Html.DisplayFor(model => model.Info.Email)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+@foreach (var item in Model.Items)
+{
+    var price = (item.Count * item.Product.Price);
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            @item.Product.Name<span class="badge" style="margin-left:5px">@item.Count</span>
+            <button type="button" class="close pull-right" aria-label="Close" item-id="@item.Product.ID">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-4">
+                <img style="height:100px;width:100px;" src="@item.Product.ImageUrl" class="cart-image" />
+            </div>
+            <div class="col-sm-6">
+                @item.Product.Description
+            </div>
+            <div class="col-sm-2">
+                <span class="price">Price: @(price.ToString("C"))</span>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row height-50">
+    <div class="col-xs-2 col-xs-offset-5">
+        <a class="btn btn-info" id="submit">Submit</a>
+    </div>
+</div>
+
+<script>
+    requirejs(['jquery','toastr'], function ($,toastr) {
+        var actions = {
+            submit: function (e) {
+                toastr.success("Order processed");
+                window.location = '@Url.Action("Index","Home")';
+                //let itemID = $(this).attr("item-id");
+                //actions.submitAjax(itemID);
+            },
+            submitAjax: function (itemID) {
+                $.ajax({
+                    url: submitUrl,
+                    data: 6,
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            console.log("Success");
+                            window.location = window.location;
+                        }
+                        else {
+                            console.log("No success");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+        $("#submit").on("click", actions.submit);
+    });
+</script>
+
