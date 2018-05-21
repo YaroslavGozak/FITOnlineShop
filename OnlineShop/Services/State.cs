@@ -10,5 +10,6 @@ namespace OnlineShop.Services
     {
         private static List<Product> _shopping;
         public static List<Product> Shopping;
+        public static Customer Customer;
     }
 }

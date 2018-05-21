@@ -14,6 +14,10 @@ namespace OnlineShop.Models
 
         public string LastName { get; set; }
 
+        public string Login { get; set; }
+
+        public string Password { get; set; }
+
         public string Email { get; set; }
 
         public string Phone { get; set; }
@@ -21,5 +25,9 @@ namespace OnlineShop.Models
         public Address Address { get; set; }
 
         public CreditCard CreditCard { get; set; }
+
+        public IEnumerable<Order> Orders { get; set; }
+
+        public string FullName { get { return FirstName + " " + LastName; } }
     }
 }

@@ -142,6 +142,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ShoppingController.cs" />
@@ -151,8 +152,12 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderLine.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\Cookies.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\State.cs" />
@@ -216,6 +221,9 @@
     <Content Include="Views\Shopping\ShoppingCart.cshtml" />
     <Content Include="Views\Shopping\CustomerInfo.cshtml" />
     <Content Include="Views\Shopping\Checkout.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\CustomerInfo.cshtml" />
+    <Content Include="Views\Account\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

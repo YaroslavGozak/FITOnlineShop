@@ -1,0 +1,38 @@
+﻿@model  OnlineShop.Models.Customer
+@{
+    ViewBag.Title = "Settings";
+}
+<div style="margin-top:50px;">
+    <div class="col-sm-4">
+        <div class="list-group">
+            <a href="@Url.Action("CustomerInfo","Account")" class="list-group-item active">User info</a>
+            <a href="@Url.Action("Orders","Account")" class="list-group-item">Orders</a>
+            <a href="@Url.Action("Logout","Account")" class="list-group-item">Log out</a>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <dl>
+            <dt>Username</dt>
+            <dd>@Model.Login</dd>
+            <dt>Name</dt>
+            <dd>@Model.FullName</dd>
+            <dt>Address</dt>
+            <dd>
+                @if (Model.Address != null)
+                {
+                <address>
+                    @(Model.Address.Address1 + ", " + Model.Address.City + ", " + Model.Address.Country)<br />
+                @(Model.Address.ZipCode)
+                </address>
+                }
+            </dd>
+            <dt>Phone</dt>
+            <dd>@Model.Phone</dd>
+            <dt>Payment method</dt>
+            @if (Model.CreditCard != null)
+            {
+            <dd>@Model.CreditCard.Number</dd>
+            }
+        </dl>
+    </div>
+</div>

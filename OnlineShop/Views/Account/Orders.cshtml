@@ -1,0 +1,44 @@
+﻿@model  OnlineShop.Models.Customer
+@{
+    ViewBag.Title = "Settings";
+}
+<div style="margin-top:50px;">
+    <div class="col-sm-4">
+        <div class="list-group">
+            <a href="@Url.Action("CustomerInfo","Account")" class="list-group-item">User info</a>
+            <a href="@Url.Action("Orders","Account")" class="list-group-item active">Orders</a>
+            <a href="@Url.Action("Logout","Account")" class="list-group-item">Log out</a>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        @foreach (var order in Model.Orders)
+        {
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    @order.OrderID
+                    <span class="pull-right">Order Date: @order.OrderDate</span>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        @foreach(var orderLine in order.Items)
+                        {
+                            <div>
+                                @orderLine.Product.Name
+                            </div>
+                            <div class="col-sm-4">
+                                <img style="height:100px;width:100px;" src="@orderLine.Product.ImageUrl" class="cart-image" />
+                            </div>
+                            <div class="col-sm-6">
+                                @orderLine.Product.Description
+                            </div>
+                            <div class="col-sm-2">
+                                <span class="price">Price: @(orderLine.Product.Price.ToString("C")) &times; @orderLine.Count</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="total-price">Total: @order.Total</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

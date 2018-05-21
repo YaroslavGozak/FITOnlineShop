@@ -5,6 +5,8 @@ using OnlineShop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
@@ -132,7 +134,25 @@ namespace OnlineShop.Controllers
                 Info = info,
                 Items = GetSelectedProducts()
             };
+            ViewBag.Hash = EncodeSHA1("");
             return View("Checkout", model);
+        }
+
+        public string EncodeSHA1(string toEncode)
+        {
+            toEncode = String.Join("|", "1410058", "EUR", "1", "1", "Test payment");
+            using(SHA1Managed sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(System.Text.UTF8Encoding.UTF8.GetBytes(toEncode));
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (byte b in hash)
+                {
+                    sb.Append(b.ToString("X2"));
+                }
+
+                return sb.ToString();
+            }
         }
 
         private List<ProductCount> GetSelectedProducts()

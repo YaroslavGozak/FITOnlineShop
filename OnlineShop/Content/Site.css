@@ -145,3 +145,12 @@ div.height-50{
     width: 200px;
     height: 200px;
 }
+
+.center{
+    display:flex;
+    justify-content:center;
+}
+
+.shadowed{
+    box-shadow: gray 10px 10px;
+}

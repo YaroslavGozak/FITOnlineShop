@@ -30,9 +30,7 @@
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar">Icon-bar</span>
                 </button>
                 @Html.ActionLink("Online Shop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
@@ -49,10 +47,26 @@
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cart
                             @if (OnlineShop.Services.State.Shopping != null && OnlineShop.Services.State.Shopping.Any())
                             {
-                                <span>(@(OnlineShop.Services.State.Shopping.Count))</span>
+                                <span class="badge">@(OnlineShop.Services.State.Shopping.Count)</span>
                             }
                         </a>
                     </li>
+                    @if (OnlineShop.Services.State.Customer == null)
+                    {
+                        <li>
+                            <a href="@Url.Action("Login","Account")">
+                                <span class="glyphicon glyphicon-log-in"></span>Login
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Settings","Account")">
+                                <span class="glyphicon glyphicon-user"></span>Settings
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
