@@ -19,24 +19,23 @@
                     <span class="pull-right">Order Date: @order.OrderDate</span>
                 </div>
                 <div class="panel-body">
-                    <div>
+                    <div class="row">
+                        <hr />
                         @foreach(var orderLine in order.Items)
                         {
-                            <div>
-                                @orderLine.Product.Name
-                            </div>
+                            
                             <div class="col-sm-4">
                                 <img style="height:100px;width:100px;" src="@orderLine.Product.ImageUrl" class="cart-image" />
                             </div>
-                            <div class="col-sm-6">
-                                @orderLine.Product.Description
+                            <div class="col-sm-6" style="min-height:100px;">
+                                <a href="@Url.Action("ProductInfo","Products",new { id = orderLine.Product.ID })">@orderLine.Product.Name</a>
                             </div>
                             <div class="col-sm-2">
-                                <span class="price">Price: @(orderLine.Product.Price.ToString("C")) &times; @orderLine.Count</span>
+                                <span>Price: @(orderLine.Product.Price.ToString("C")) &times; @orderLine.Count</span>
                             </div>
                         }
                     </div>
-                    <div class="total-price">Total: @order.Total</div>
+                    <div class="total-price row"><span class="pull-right">Total: @order.Total</span></div>
                 </div>
             </div>
         }

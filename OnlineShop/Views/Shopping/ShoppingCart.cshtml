@@ -35,11 +35,11 @@
                 }
             </div>
             <div class="row">
-                <div class="pull-right total-price">Total: @(total.ToString("C"))</div>
+                <div class="pull-right total-price">Total: @(OnlineShop.Services.State.Shopping.Total.ToString("C"))</div>
             </div>
             <div class="row">
-                <a class="btn btn-info pull-left" href="@Url.Action("Index","Home")">Continue Shopping</a>
-                <a class="btn btn-info pull-right" href="@Url.Action("Checkout","Shopping")">Checkout</a>
+                <a class="btn btn-info btn-lg pull-left" href="@Url.Action("Index","Home")">Continue Shopping</a>
+                <a class="btn btn-info btn-lg pull-right" href="@Url.Action("Checkout","Shopping")">Checkout</a>
             </div>
         }
         else

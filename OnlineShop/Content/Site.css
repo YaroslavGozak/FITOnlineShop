@@ -7,6 +7,18 @@
     min-height: 974px;
 }
 
+body p {
+    font-size: 18px;
+}
+
+p {
+    font-size: 18px;
+}
+
+#productList p {
+    margin-left: 20px;
+}
+
 a{
     cursor:pointer;
 }
@@ -72,11 +84,8 @@ footer{
 }
 
 .card{
-    display:block;
-    border-radius:6px;
-    box-shadow:3px 3px 5px grey;
-    margin: 10px;
-    border: 1px solid gray;
+    margin: 20px;
+    padding: 20px;
 }
 
 .card:hover {
@@ -84,9 +93,9 @@ footer{
 }
 
 .card-img-top {
-    width: 200px;
-    height: 200px;
-    min-height:200px;
+    width: 250px;
+    height: 250px;
+    min-height:250px;
     background-position: 50% 50%;
     margin:5px;
 }
@@ -153,4 +162,9 @@ div.height-50{
 
 .shadowed{
     box-shadow: gray 10px 10px;
+}
+
+.content-center{
+    display:flex;
+    justify-content:center;
 }

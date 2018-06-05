@@ -3,38 +3,36 @@
 }
 @model OnlineShop.ViewModels.ProductViewModel
 
-<div class="height-50"></div>
-@if (Model?.Products != null)
-{
-    foreach (var product in Model.Products)
+<div id="productList">
+    <div class="height-50"></div>
+    @if (Model?.Products != null)
     {
-        if (product.Description.Length > 50)
+        foreach (var product in Model.Products)
         {
-            product.Description = product.Description.Substring(0, 47) + "...";
-        }
-        <div class="col-md-4 col-sm-6">
-            <div class="card">
-                <a href='@Url.Action("ProductInfo","Products",new { id = product.ID })'>
-                    <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
-                </a>
-                <div class="card-body">
+            <div class="row card">
+                <div class="col-sm-3">
+                    <a href='@Url.Action("ProductInfo","Products",new { id = product.ID })'>
+                        <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
+                    </a>
+                </div>
+                <div class="col-sm-7">
                     <h4 class="card-title">@product.Name</h4>
                     <p class="card-text">@product.Description</p>
-                    
                 </div>
-                <div class="card-footer">
-                    <span><strong>Price: </strong> @product.Price.ToString("C")</span>
-                    <a class="btn btn-primary add-to-cart" product-id="@product.ID">Add to Cart</a>
+                <div class="col-sm-2">
+                    <div class="col-sm-12">
+                        <h4><strong>Price: </strong> @product.Price.ToString("C")</h4>
+                    </div>
+                    <div class="col-sm-12">
+                        <a class="btn btn-primary btn-lg add-to-cart" product-id="@product.ID">Add to Cart</a>
+                    </div>
                 </div>
-            </div>
-        </div>
-    }
-}
 
-@for(var i = 0; i < 5; i++)
-{
-    <div class="height-50"></div>
-}
+            </div>
+            <hr />
+        }
+    }
+</div>
 
 <script>
     requirejs(['jquery', 'toastr'], function ($, toastr) {

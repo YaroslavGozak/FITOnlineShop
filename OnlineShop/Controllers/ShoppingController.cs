@@ -27,6 +27,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         public ActionResult AddItemToCart(Product item)
         {
+            var fullItem = ProductService.GetByID(item.ID);
             var cookie = HttpContext.Request.Cookies.Get(cookieName);
             if (cookie == null)
             {
@@ -35,11 +36,11 @@ namespace OnlineShop.Controllers
             }
             var serializedCart = cookie.Value;
             var items = JsonConvert.DeserializeObject<List<Product>>(serializedCart);
-            items.Add(item);
+            items.Add(fullItem);
             cookie = new HttpCookie(cookieName, JsonConvert.SerializeObject(items));
             HttpContext.Response.Cookies.Add(cookie);
 
-            State.Shopping = items;
+            State.Shopping.Products = items;
 
             return new JsonResult
             {
@@ -84,7 +85,7 @@ namespace OnlineShop.Controllers
             cookie = new HttpCookie(cookieName, JsonConvert.SerializeObject(items));
             HttpContext.Response.Cookies.Add(cookie);
 
-            State.Shopping = items;
+            State.Shopping.Products = items;
 
             return new JsonResult
             {
@@ -97,7 +98,7 @@ namespace OnlineShop.Controllers
 
         public ActionResult ShoppingCart()
         {
-            var savedProducs = State.Shopping;
+            var savedProducs = State.Shopping.Products;
             if (savedProducs == null || !savedProducs.Any())
                 return View();
             var productIDs = savedProducs.Select(stateProduct => stateProduct.ID);
@@ -118,7 +119,7 @@ namespace OnlineShop.Controllers
         public ActionResult Checkout(Customer model)
         {
             if (!Request.IsAjaxRequest() || Request.HttpMethod == "GET")
-                return View("CustomerInfo", model);
+                return View("CustomerInfo", State.Customer);
             else
             {
                 cache.Add("CustomerInfo", model, null, DateTime.MaxValue, TimeSpan.FromDays(1), CacheItemPriority.Normal, null);
@@ -126,38 +127,32 @@ namespace OnlineShop.Controllers
             }
         }
 
+        public ActionResult Payment()
+        {
+            return View();
+        }
+
         public ActionResult Review()
         {
-            var info = cache.Get("CustomerInfo") as Customer;
+            var info = State.Customer;
             var model = new ReviewViewModel
             {
                 Info = info,
                 Items = GetSelectedProducts()
             };
-            ViewBag.Hash = EncodeSHA1("");
             return View("Checkout", model);
         }
 
-        public string EncodeSHA1(string toEncode)
+        [HttpPost]
+        public ActionResult PaymentCallback(object response)
         {
-            toEncode = String.Join("|", "1410058", "EUR", "1", "1", "Test payment");
-            using(SHA1Managed sha1 = new SHA1Managed())
-            {
-                var hash = sha1.ComputeHash(System.Text.UTF8Encoding.UTF8.GetBytes(toEncode));
-                var sb = new StringBuilder(hash.Length * 2);
-
-                foreach (byte b in hash)
-                {
-                    sb.Append(b.ToString("X2"));
-                }
-
-                return sb.ToString();
-            }
+            var temp = response;
+            return RedirectToAction("Index", "Home");
         }
 
         private List<ProductCount> GetSelectedProducts()
         {
-            var savedProducs = State.Shopping;
+            var savedProducs = State.Shopping.Products;
             if (savedProducs == null || !savedProducs.Any())
                 return new List<ProductCount>();
             var productIDs = savedProducs.Select(stateProduct => stateProduct.ID);

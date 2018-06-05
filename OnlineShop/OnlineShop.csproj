@@ -156,6 +156,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderLine.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Shopping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\Cookies.cs" />
@@ -180,6 +181,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\honey.jpg" />
+    <Content Include="Images\honey2.jpg" />
+    <Content Include="Images\LinenCloth.jpg" />
+    <Content Include="Images\LinenTowel.jpg" />
+    <Content Include="Images\PillowGreen.jpg" />
+    <Content Include="Images\PillowPink.jpg" />
+    <Content Include="Images\Soap.jpg" />
+    <Content Include="Images\Title.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -224,6 +233,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\CustomerInfo.cshtml" />
     <Content Include="Views\Account\Orders.cshtml" />
+    <Content Include="Views\Shopping\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

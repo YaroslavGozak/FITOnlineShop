@@ -12,7 +12,7 @@ namespace OnlineShop.Services
         {
             new Customer
             {
-                
+                CustomerID = 1,
                 Login = "admin",
                 Password = "admin",
                 FirstName = "Yaroslav",
@@ -21,14 +21,24 @@ namespace OnlineShop.Services
                 {
                     Address1 = "Hrushevsky str, 28/2",
                     City = "Kiev",
-                    Country = "Ukraine",
+                    Country = "Poland",
                     ZipCode = "01021"
                 },
                 Email = "gozakyaroslav@gmail.com",
+                Phone = "+38 (095) 791 79 93",
+                CreditCard = new CreditCard
+                {
+                    CVV = "333",
+                    ExpirationMonth = 10,
+                    ExpirationYear = 2028,
+                    NameOnCard = "Yaroslav Gozak",
+                    Number = "1234 1234 1234 1238"
+                },
                 Orders = new List<Order>
                 {
                     new Order
                     {
+                        OrderID = 1,
                         OrderDate = DateTime.Now.AddDays(-2),
                         Items = new List<OrderLine>
                         {
@@ -46,6 +56,7 @@ namespace OnlineShop.Services
                     },
                     new Order
                     {
+                        OrderID = 239,
                         OrderDate = DateTime.Now.AddDays(-2),
                         ShippingAddress =  new Address
                         {
@@ -59,7 +70,7 @@ namespace OnlineShop.Services
                             new OrderLine
                             {
                                 Count = 1,
-                                Product = ProductService.GetByID(5)
+                                Product = ProductService.GetByID(4)
                             }
                         }
                     }

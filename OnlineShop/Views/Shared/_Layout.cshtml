@@ -45,9 +45,9 @@
                     <li>
                         <a href='@Url.Action("ShoppingCart", "Shopping")'>
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cart
-                            @if (OnlineShop.Services.State.Shopping != null && OnlineShop.Services.State.Shopping.Any())
+                            @if (OnlineShop.Services.State.Shopping.Products != null && OnlineShop.Services.State.Shopping.Products.Any())
                             {
-                                <span class="badge">@(OnlineShop.Services.State.Shopping.Count)</span>
+                                <span class="badge">@(OnlineShop.Services.State.Shopping.Products.Count)</span>
                             }
                         </a>
                     </li>
